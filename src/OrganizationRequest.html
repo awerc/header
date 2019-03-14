@@ -1,0 +1,719 @@
+<!--@using Astral.ETP.Requests.App.UseCases.Reports.OrganizationRequest-->
+<!--@using Astral.ETP.Utils-->
+<!--@model OrganizationStatementReportModel-->
+
+<!--@{-->
+  <!--var count = 1;-->
+<!--}-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <style>
+
+    html {
+      padding-left: 1cm;
+      padding-top: 0.5cm;
+      padding-right: 0.5cm;
+      padding-bottom: 0.5cm;
+    }
+
+    body {
+      font-family: 'Times New Roman', serif;
+      font-size: 10pt;
+      padding: 0;
+    }
+
+    p {
+      margin-top: 2px;
+      margin-bottom: 2px;
+      letter-spacing: -0.5px;
+    }
+
+    hr {
+      height: 0px;
+      border-bottom: 0;
+    }
+
+    .head {
+      text-align: right;
+    }
+
+    .center {
+      text-align: center;
+    }
+
+    .paddingHead {
+      padding-top: 8px;
+      padding-bottom: 8px;
+    }
+
+    .ulAttachments {
+      padding-bottom: 10px;
+      padding-left: 52px;
+    }
+
+      .ulAttachments::before {
+        display: block;
+        position: absolute;
+        left: 52px;
+        margin-top: 3px;
+        content: attr(data-num);
+      }
+
+    .line > hr {
+      margin-bottom: 0px;
+      margin-top: 0px;
+      padding-bottom: 0px;
+    }
+
+    .line > p {
+      margin-top: 0px;
+    }
+
+    .line > .text-line {
+      margin-bottom: 0px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 8pt;
+    }
+
+      table > thead > tr > th {
+        text-align: center;
+        border: 1px solid black;
+        padding: 1px 4px;
+      }
+
+      table > tbody > tr > td {
+        border: 1px solid black;
+        padding: 1px 4px;
+      }
+
+    .clearfix:before,
+    .clearfix:after {
+      content: " ";
+      display: table;
+    }
+
+    .clearfix:after {
+      clear: both;
+    }
+
+    .container {
+      padding-top: 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .element {
+      float: left;
+      margin-right: 5px;
+      min-width: 10px;
+      max-width: 600px;
+      height: 30px;
+    }
+
+    .bordered {
+      margin-left: 20px;
+      padding: 2px 10px;
+      border: 1px black solid;
+      height: auto;
+    }
+
+    .stretch-element {
+      position: absolute;
+      height: 40px;
+      overflow: hidden;
+    }
+
+    .table-cell {
+      display: table-cell;
+      width: 1%;
+    }
+
+    .page-break {
+      page-break-before: always;
+    }
+
+    .p8 {
+      font-size: 12px;
+      line-height: 14px;
+    }
+
+    .text {
+      line-height: 14px;
+    }
+
+    .col-text-center {
+      text-align: center;
+    }
+
+    .col-text-bold {
+      font-weight: 900;
+    }
+  </style>
+</head>
+<body>
+  <div class="head">
+    <p>Аккредитованный Удостоверяющий центр</p>
+    <p>ЗАО «Калуга Астрал»</p>
+  </div>
+  <div class="center paddingHead">
+    <p><b>Заявление</b></p>
+    <p>юридического лица на изготовление сертификата ключа проверки</p>
+    <p>электронной подписи</p>
+  </div>
+  <div class="line paddingHead">
+    <p class="center text-line">@Html.Raw(Model.OrganizationFullName)</p>
+    <hr>
+    <p class="center p8">(полное наименование организации, включая организационно-правовую форму)</p>
+  </div>
+  <div class="container clearfix">
+    <div class="element">
+      в лице&nbsp;&nbsp;
+    </div>
+    <div class="element">
+      <div class="stretch-element">
+        <div class="table-cell">
+          <div class="line">
+            @*todo склонять в родительном падеже*@
+            <p class="text-line">@Html.Raw(Model.HeadPosition), @Html.Raw(Model.HeadSurname) @Html.Raw(Model.Name) @Html.Raw(Model.HeadPatronymic)</p>
+            <hr>
+            <p class="center p8">(должность руководителя юридического лица, фамилия, имя, отчество в родительном падеже)</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container clearfix">
+    <div class="element">
+      действующего на основании&nbsp;&nbsp;
+    </div>
+    <div class="element">
+      <div class="stretch-element">
+        <div class="table-cell">
+          <div class="line">
+            <p class="text-line">@Html.Raw(Model.IdentityDocument.DocumentType.Name)</p>
+            <hr>
+            <p class="center p8">(основание полномочий)</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p class="text" style="text-align: justify">
+    просит создать сертификат (-ты) ключа (-ей) проверки электронной подписи Уполномоченного
+    представителя Заявителя – юридического лица (Пользователя Удостоверяющего центра ЗАО «КАЛУГА
+    АСТРАЛ») в соответствии с указанными в настоящем заявлении данными:
+  </p>
+  <table>
+    <tbody>
+      <tr>
+        <td>Фамилия</td>
+        <td colspan="3">@Html.Raw(Model.Surname)</td>
+      </tr>
+      <tr>
+        <td>Имя, Отчество</td>
+        <td colspan="3">@Html.Raw(Model.Name)&nbsp;@Html.Raw(Model.Patronymic)</td>
+      </tr>
+      <tr>
+        <td>СНИЛС</td>
+        <td colspan="3">@Html.Raw(Model.Snils)</td>
+      </tr>
+      <tr>
+        <td>Должность</td>
+        <td colspan="3">@Html.Raw(Model.OwnerPosition)</td>
+      </tr>
+      <tr>
+        <td>Сокращенное наименование ЮЛ</td>
+        <td colspan="3">@Html.Raw(Model.OrganizationFullName)</td>
+      </tr>
+      <tr>
+        <td>ИНН / КПП / ОГРН </td>
+        <td>@Html.Raw(Model.Inn)</td>
+        <td>@Html.Raw(Model.Kpp)</td>
+        <td>@Html.Raw(Model.Ogrn)</td>
+      </tr>
+      <tr>
+        <td>Подразделение организации</td>
+        <td colspan="3">@Html.Raw(Model.BranchName)</td>
+      </tr>
+      <tr>
+        <td>Страна / Область </td>
+        <td>РФ</td>
+        <td colspan="2">@Html.Raw(Model.Region)</td>
+      </tr>
+      <tr>
+        <td>Населенный пункт</td>
+        <td colspan="3">@Html.Raw(Model.City)</td>
+      </tr>
+      <tr>
+        <td>
+          Название улицы, номер дома, корпуса,
+          строения, помещения
+        </td>
+        <td colspan="3">@Html.Raw(Model.Street)</td>
+      </tr>
+      <tr>
+        <td>Адрес электронной почты</td>
+        <td colspan="3">@Html.Raw(Model.Email)</td>
+      </tr>
+    </tbody>
+  </table>
+  <br />
+  <div class="container clearfix">
+    <div class="element">
+      Я,&nbsp;&nbsp;
+    </div>
+    <div class="element">
+      <div class="stretch-element">
+        <div class="table-cell">
+          <div class="line">
+            <p class="center text-line">@Html.Raw(CommonHelpers.ExtractFio(Model, false))</p>
+            <hr>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container clearfix">
+    <div class="element">
+      документ, удостоверяющий личность:&nbsp;&nbsp;
+    </div>
+    <div class="element">
+      <div class="stretch-element">
+        <div class="table-cell">
+          <div class="line">
+            <p class="text-line">@Html.Raw(Model.IdentityDocument.DocumentType.Name)</p>
+            <hr>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container clearfix">
+    <div class="element">
+      <div style="position: absolute; left: 0px">
+
+          <div class="element">
+            серия&nbsp;&nbsp;
+          </div>
+          <div class="element" style="width: 100px">
+            <div class="line">
+              <p class="center text-line">
+                @Html.Raw(Model.IdentityDocument.Series ?? "-")
+              </p>
+              <hr>
+            </div>
+          </div>
+        <div class="element">
+          &nbsp;&nbsp;&nbsp;№&nbsp;&nbsp;
+        </div>
+        <div class="element" style="width: 100px">
+          <div class="line">
+            <p class="center text-line">@Html.Raw(Model.IdentityDocument.Number)</p>
+            <hr>
+          </div>
+        </div>
+        <div class="element">
+          &nbsp;&nbsp;&nbsp;код подразделения&nbsp;&nbsp;
+        </div>
+        <div class="element" style="width: 100px">
+          <div class="line">
+            <p class="center text-line">
+              @Html.Raw(Model.IdentityDocument.DivisionCode ?? "-")
+            </p>
+            <hr>
+          </div>
+        </div>
+        <div class="element">
+          &nbsp;&nbsp;&nbsp;выдан&nbsp;&nbsp;
+        </div>
+        <div class="element" style="width: 100px">
+          <div class="line">
+            <p class="center text-line">@Html.Raw(Model.IdentityDocument.IssueDate)</p>
+            <hr>
+          </div>
+        </div>
+        <div class="element" style="margin: 0">
+          &nbsp;г.
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container clearfix">
+    <div class="element">
+      <div class="stretch-element">
+        <div class="table-cell">
+          <div class="line">
+            <p class="center text-line">@Html.Raw(Model.IdentityDocument.Authority)</p>
+            <hr>
+            <p class="center p8">(наименование органа, выдавшего документ)</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container clearfix">
+    <div class="element">
+      <div style="position:absolute; left: 0px">
+        <div class="element">
+          дата рождения:&nbsp;
+        </div>
+        <div class="element" style="width: 100px">
+          <div class="line">
+            <p class="center text-line">@Html.Raw(Model.IdentityDocument.BirthDate)</p>
+            <hr>
+          </div>
+        </div>
+        <div class="element">
+          &nbsp;г.,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;место рождения:&nbsp;
+        </div>
+        <div class="element" style="width: 386px; margin-right: 0px">
+          <div class="line">
+            <p class="text-line">@Html.Raw(Model.IdentityDocument.Birthplace)</p>
+            <hr>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="p8">
+    в соответствии со статьей 9 Федерального закона от 27.07.2006 № 152-ФЗ «О персональных данных», даю согласие ЗАО «КАЛУГА АСТРАЛ» (юридический адрес: г.
+    Калуга, пер. Теренинский, д. 6, почтовый адрес: г. Калуга, ул. Циолковского, д. 4) на обработку своих персональных данных: фамилия, имя, отчество, ИНН, СНИЛС, место
+    работы (организация), подразделение, должность, адрес места жительства, адрес электронной почты, пол, телефон, паспортные данные (серия и номер, код подразделения,
+    место и дата рождения, дата выдачи паспорта, адрес регистрации), включая сбор, запись, систематизацию, накопление, хранение, уточнение (обновление, изменение),
+    извлечение, использование, передачу (распространение, предоставление, доступ), обезличивание, блокирование, удаление, уничтожение) с использованием средств
+    автоматизации и без использования таких средств.
+    <br />
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Настоящее согласие на обработку персональных данных дается в целях исполнения договора на оказание услуг Удостоверяющего центра ЗАО «КАЛУГА АСТРАЛ» по
+    изготовлению квалифицированных сертификатов ключей проверки электронной подписи в соответствии с федеральным законом от 06.04.2011 № 63-ФЗ «Об электронной
+    подписи» (далее - договор).
+    <br />
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;На основании части 1 статьи 8 Федерального закона от 27.07.2006 № 152-ФЗ «О персональных данных» соглашаюсь с включением своих персональных данных,
+    указанных выше, в объеме, необходимом для исполнения требований части 3 статьи 15 федерального закона от 06.04.2011 № 63-ФЗ «Об электронной подписи» в
+    общедоступный источник персональных данных: Реестр квалифицированных сертификатов аккредитованного удостоверяющего центра ЗАО «КАЛУГА АСТРАЛ».
+    <br />
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Соглашаюсь с передачей своих персональных данных, указанных выше, в единую систему идентификации и аутентификации (далее - ЕСИА), в объеме, необходимом
+    для регистрации в ЕСИА, в целях исполнения требования части 5 статьи 18 федерального закона от 06.04.2011 № 63-ФЗ «Об электронной подписи».
+    <br />
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Настоящее согласие на обработку персональных данных вступает в силу со дня его подписания. Согласие на обработку персональных данных может быть отозвано мной
+    в письменной форме. Согласие действует на срок действия договора и в течение срока деятельности аккредитованного Удостоверяющего центра ЗАО «КАЛУГА АСТРАЛ»
+    (ч. 2 ст. 15 федерального закона от 06.04.2011 № 63-ФЗ «Об электронной подписи»).
+    <br />
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Подтверждаю, что сведения, указанные в настоящем заявлении, мною указаны верно. Достоверность данных сведений подтверждаю.
+  </div>
+  <br />
+  <div class="container clearfix">
+    <div class="element">
+      <div style="position:absolute; right: 0">
+        <div class="element" style="width: 300px">
+          <div class="line">
+            <p class="center text-line">&nbsp;</p>
+            <hr>
+            <p class="center p8">(подпись субъекта персональных данных)</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container clearfix">
+    <div class="element">
+      <div style="position:absolute; left: 0">
+        <div class="element" style="width: 300px;">
+          <div class="line">
+            <p class="center text-line">@Html.Raw(Model.HeadPosition)</p>
+            <hr>
+            <p class="center p8">(Должность руководителя)</p>
+          </div>
+        </div>
+        <div class="element" style="width: 150px; padding: 0 30px;">
+          <div class="line">
+            <p class="center text-line">&nbsp;</p>
+            <hr>
+            <p class="center p8">(подпись)</p>
+          </div>
+        </div>
+        <div class="element" style="width: 150px">
+          <div class="line">
+            <p class="center text-line">@Html.Raw(Model.HeadSurname) @Html.Raw(Model.HeadName[0]) @Html.Raw(Model.HeadPatronymic[0])</p>
+            <hr>
+            <p class="center p8">(фамилия, инициалы)</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br />
+  <div class="container clearfix">
+    <div class="element">
+      <div class="line" style="width: 300px;">
+        <p class="center text-line">М.П.</p>
+      </div>
+    </div>
+    <div class="element">
+      <div style="position:absolute; right: 50px">
+        <div class="element">
+          <div class="line">
+            <p class="center text-line">« &nbsp; &nbsp; &nbsp; »</p>
+            <hr>
+          </div>
+        </div>
+        <div class="element" style="width: 100px">
+          <div class="line">
+            <p class="center text-line">&nbsp;</p>
+            <hr>
+          </div>
+        </div>
+        <div class="element" style="margin: 0">
+          20
+        </div>
+        <div class="element" style="width: 20px">
+          <div class="line">
+            <p class="center text-line">&nbsp;</p>
+            <hr>
+          </div>
+        </div>
+        <div class="element" style="margin: 0">
+          года
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-break">
+    &nbsp;
+  </div>
+  <div class="center paddingHead">
+    <p><b>ПРИЛОЖЕНИЕ</b></p>
+    <p>к заявлению на изготовление сертификата (-ов) ключа (-ей) проверки электронной подписи</p>
+  </div>
+
+  <div class="left paddingHead ulAttachments" data-num="1."><p>Дополнительные сведения:</p></div>
+  <div class="container clearfix">
+    <div class="element">
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Контактный телефон:
+    </div>
+    <div class="element bordered center" style="width: 300px;">
+      @Html.Raw(Model.Phone)
+    </div>
+  </div>
+  <div class="left paddingHead ulAttachments" data-num="2."><p>Укажите выбор:</p></div>
+  <table>
+    <thead>
+      <tr>
+        <th style="width: 40px;">№</th>
+        <th>Наименование тарифного плана</th>
+        <th style="width: 140px;">Стоимость</th>
+        <th style="width: 50px;">Отметка</th>
+      </tr>
+    </thead>
+    <tbody>
+        @{
+          foreach (var tariff in Model.TariffReportModels)
+          {
+            <tr>
+              <td>@Html.Raw(count++)</td>
+              <td>@Html.Raw(tariff.Name)</td>
+              <td>@Html.Raw(tariff.Price)</td>
+              <td>@Html.Raw(tariff.Mark)</td>
+            </tr>
+          }
+          count = 1;
+        }
+    </tbody>
+  </table>
+    @if (Model.TariffExtensionReportModels != null)
+    {
+      <div class="left paddingHead ulAttachments" data-num="3."><p>Укажите выбор расширения для тарифа:</p></div>
+      <table>
+        <thead>
+        <tr>
+          <th style="width: 40px;">№</th>
+          <th>Наименование</th>
+          <th style="width: 140px;">Стоимость</th>
+          <th style="width: 50px;">Отметка</th>
+        </tr>
+        </thead>
+        <tbody>
+        @{
+          foreach (var tariffExtension in Model.TariffExtensionReportModels)
+          {
+            <tr>
+              <td>@Html.Raw(count++)</td>
+              <td>@Html.Raw(tariffExtension.Name)</td>
+              <td>@Html.Raw(tariffExtension.Price)</td>
+              <td>@Html.Raw(tariffExtension.Mark)</td>
+            </tr>
+          }
+        }
+        </tbody>
+      </table>
+      <div class="left paddingHead ulAttachments"><p>Укажите выбор расширения лицензии:</p></div>
+      <div class="left paddingHead ulAttachments" data-num="4."><p>Выберите тип СКЗИ, для работы с которым необходимо сформировать ключи электронной подписи:</p></div>
+    }
+    else
+    {
+      <div class="left paddingHead ulAttachments"><p>Укажите выбор расширения лицензии:</p></div>
+      <div class="left paddingHead ulAttachments" data-num="3."><p>Выберите тип СКЗИ, для работы с которым необходимо сформировать ключи электронной подписи:</p></div>
+    }
+    @if (Model.CadastralEngNum != null)
+    {
+      <div class="container clearfix">
+        <div class="element">
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Укажите номер аттестата кадастрового инженера:
+        </div>
+        <div class="element bordered" style="width: 300px;">
+          @Html.Raw(Model.CadastralEngNum)
+        </div>
+      </div>
+    }
+    @if (Model.InformationSystemName != null)
+    {
+      <div class="container clearfix">
+        <div class="element">
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Укажите наименование информационной системы:
+        </div>
+        <div class="element bordered" style="width: 300px;">
+          @Html.Raw(Model.InformationSystemName)
+        </div>
+      </div>
+    }
+  <div class="container clearfix">
+    <div class="element">
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Используемый криптопровайдер:
+    </div>
+    <div class="element bordered" style="width: 300px;">
+      <b>@Html.Raw(Model.CryptoProviderTypeName)</b>
+    </div>
+  </div>
+  <br />
+  <div class="container clearfix">
+    <div class="element">
+      <div style="position:absolute; left: 0px">
+        <div class="element" style="width: 300px">
+          <div class="line">
+            <p class="center text-line">@Html.Raw(Model.HeadPosition)</p>
+            <hr>
+            <p class="center p8">(Должность руководителя)</p>
+          </div>
+        </div>
+        <div class="element" style="width: 150px; padding: 0 30px;">
+          <div class="line">
+            <p class="center text-line">&nbsp;</p>
+            <hr>
+            <p class="center p8">(подпись)</p>
+          </div>
+        </div>
+        <div class="element" style="width: 150px">
+          <div class="line">
+            <p class="center text-line">@Html.Raw(Model.HeadSurname) @Html.Raw(Model.HeadName[0]) @Html.Raw(Model.HeadPatronymic[0])</p>
+            <hr>
+            <p class="center p8">(фамилия, инициалы)</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br />
+  <div class="container clearfix">
+    <div class="element">
+      <div style="position:absolute; left: 0px">
+        <div class="element">
+          <div class="line">
+            <p class="center text-line">« &nbsp; &nbsp; &nbsp; »</p>
+            <hr>
+          </div>
+        </div>
+        <div class="element" style="width: 100px">
+          <div class="line">
+            <p class="center text-line">&nbsp;</p>
+            <hr>
+          </div>
+        </div>
+        <div class="element" style="margin: 0">
+          20
+        </div>
+        <div class="element" style="width: 20px">
+          <div class="line">
+            <p class="center text-line">&nbsp;</p>
+            <hr>
+          </div>
+        </div>
+        <div class="element" style="margin: 0">
+          года
+        </div>
+      </div>
+    </div>
+  </div>
+  <br />
+  <div class="container clearfix">
+    <div class="element">
+      <div class="line" style="width: 300px;">
+        <p class="center text-line">М.П.</p>
+      </div>
+    </div>
+  </div>
+  <div class="center paddingHead">ЗАПОЛНЯЕТСЯ ДОВЕРЕННЫМ ЛИЦОМ УДОСТОВЕРЯЮЩЕГО ЦЕНТРА</div>
+  <hr style="border: 1px dashed">
+  <p class="text">Настоящим подтверждаю, что Заявление на изготовление сертификата (-ов) ключа (-ей) проверки электронной подписи получено, личность</p>
+  <div class="line">
+    <p class="center text-line">@Html.Raw(Model.HeadSurname) @Html.Raw(Model.HeadName) @Html.Raw(Model.HeadPatronymic)</p>
+    <hr>
+    <p class="center p8">(фамилия, имя, отчество владельца сертификата)</p>
+  </div>
+  <p>идентифицирована, сведения, указанные в Заявлении проверены.</p>
+  <div class="container clearfix">
+    <div class="element">
+      Доверенное лицо Удостоверяющего центра
+    </div>
+    <div class="element">
+      <div class="line" style="width: 150px; padding-left: 30px; padding-right: 20px;">
+        <p class="center text-line">&nbsp;</p>
+        <hr>
+        <p class="center p8">(подпись)</p>
+      </div>
+    </div>
+    <div class="element" style="width: 200px;">
+      <div class="line">
+        <p class="center text-line">&nbsp; &nbsp; &nbsp;</p>
+        <hr>
+        <p class="center p8">(фамилия, инициалы)</p>
+      </div>
+    </div>
+  </div>
+  <div class="container clearfix">
+    <div class="element">
+      <div style="position:absolute; left: 0px">
+        <div class="element">
+          <div class="line">
+            <p class="center text-line">« &nbsp; &nbsp; &nbsp; »</p>
+            <hr>
+          </div>
+        </div>
+        <div class="element" style="width: 100px">
+          <div class="line">
+            <p class="center text-line">&nbsp;</p>
+            <hr>
+          </div>
+        </div>
+        <div class="element" style="margin: 0">
+          20
+        </div>
+        <div class="element" style="width: 20px">
+          <div class="line">
+            <p class="center text-line">&nbsp;</p>
+            <hr>
+          </div>
+        </div>
+        <div class="element" style="margin: 0">
+          года
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
