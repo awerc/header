@@ -1,15 +1,141 @@
 .navbar {
-  position: relative;
-  display: -webkit-flex;
+  position: fixed;
+  right: 0;
+  left: 0;
+  z-index: 1030;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  padding: 0 1rem;
   align-items: stretch;
+  background-color: #fff;
+
+  a {
+    text-decoration: none;
+    background-color: transparent;
+  }
+
+  .header {
+    padding: 0 1rem;
+
+    @media (max-width: 1200px) {
+      width: 100%;
+      text-align: initial;
+    }
+
+    .navbar-brand {
+      display: inline-block;
+      padding-top: 0.3125rem;
+      padding-bottom: 0.3125rem;
+      font-size: 1.25rem;
+      line-height: inherit;
+      white-space: nowrap;
+
+      .brand-title {
+        height: 50px;
+        padding: 15px 10px;
+        color: #5e5e5e;
+        font-size: 16px;
+        line-height: 20px;
+        text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.15);
+      }
+    }
+  }
+
+  .nav-menu {
+    display: flex;
+    align-items: stretch;
+    margin-right: auto;
+    margin-bottom: 0;
+    padding-left: 0;
+    font-size: 14px;
+    list-style: none;
+
+    @media (max-width: 1200px) {
+      flex-direction: column;
+      flex-wrap: wrap;
+      width: 100%;
+    }
+  }
+
+  .navbar-collapse {
+    display: flex;
+    flex-grow: 1;
+    flex-basis: auto;
+    align-items: stretch;
+
+    @media (max-width: 1200px) {
+      flex-direction: column;
+      text-align: left;
+
+      &:not(.show) {
+        display: none;
+      }
+    }
+
+    .custom-navlink {
+      padding: 15px 9px;
+      color: #0287d0;
+      line-height: 20px;
+      text-decoration: none;
+
+      &:hover {
+        color: #0287d0;
+        border-radius: 2px;
+        box-shadow: 0 3px 3px rgba(0, 0, 0, 0.175);
+      }
+
+      &.active {
+        color: #fff;
+        background-color: #279cdc;
+        border-radius: 2px;
+        box-shadow: 0 3px 3px rgba(0, 0, 0, 0.175);
+      }
+    }
+
+    .profile-dropdown {
+      font-size: 14px;
+
+      .profile-title {
+        color: #39464e;
+
+        .svg-icon {
+          margin-right: 5px;
+        }
+
+        .light-text {
+          margin-left: 5px;
+          color: #a6a6a6;
+        }
+      }
+
+      & + .dropdown-menu {
+        color: #39464e;
+
+        .dropdown-item {
+          display: flex;
+          align-items: center;
+          color: #39464e;
+
+          svg {
+            margin-right: 5px;
+            fill: #39464e;
+          }
+
+          &:hover {
+            color: #fff;
+
+            svg {
+              fill: #fff;
+            }
+          }
+        }
+      }
+    }
+  }
 }
 
 @media (min-width: 1200px) {
-  .navbar-expand-xl {
+  .navbar {
     flex-flow: row nowrap;
     justify-content: flex-start;
   }

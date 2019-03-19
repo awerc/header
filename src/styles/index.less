@@ -1,10 +1,23 @@
-@import "~roboto-fontface/css/roboto/roboto-fontface.css";
+@import '~roboto-fontface/css/roboto/roboto-fontface.css';
 
-@import "./navbar";
-@import "./App.css";
+@import './navbar';
+@import './dropdown';
+@import './navbar-toggle-button';
+@import './App.css';
 
 body {
   margin: 0;
   padding: 0;
-  font-family: "Roboto", sans-serif;
+  font-family: 'Roboto', sans-serif;
+}
+
+svg {
+  overflow: hidden;
+  vertical-align: middle;
+}
+
+*,
+::after,
+::before {
+  box-sizing: border-box;
 }
